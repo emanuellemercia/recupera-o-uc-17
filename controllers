@@ -1,0 +1,110 @@
+usando  CapítuloTurmaOi . Modelos ;
+usando  CapítuloTurmaOi . Repositórios ;
+usando  Microsoft . AspNetCore . Autorização ;
+usando  Microsoft . AspNetCore . Mvc ;
+
+namespace  ChapterTurmaOi . controladores
+{
+    [ Produz ( " aplicativo/json " )]
+    [ Rota ( " api/[controlador] " )]
+    [ ApiController ]
+    [ Autorizar ]
+    public  class  LivroController : ControllerBase
+    {
+        private  readonly  LivroRepository  _livroRepository ;
+
+        public  LivroController ( LivroRepository  livroRepository )
+        {
+            _livroRepository  =  livroRepository ;
+        }
+
+
+        [ HttpGet ]
+
+        public  IActionResultler  ( )
+        {
+            experimentar
+            {
+                return  Ok ( _livroRepository . Listar ());
+            }
+            pegar ( Exceção  e )
+            {
+                lançar  nova  exceção ( e . Message );
+            }
+
+        }
+
+        [ HttpGet ( " {id} " )]
+        public  IActionResult  BuscarPorId ( int  id )
+        {
+
+
+            experimentar
+            {
+
+                Livro  livroBuscado  =  _livroRepository . BuscarPorId ( id );
+
+                if ( livroBuscado  ==  null )
+                {
+                    return  NotFound ( " Não encontrado " );
+                }
+
+                return  Ok ( livroBuscado );
+            }
+
+            pegar ( Exceção  e )
+            {
+                lançar  nova  exceção ( e . Message );
+            }
+        }
+
+        [ Autorizar ( Funções  = " 1 " )]
+        [ HttpPost ]
+        public  IActionResult  Cadastrar ( Livro  l )
+        {
+            experimentar
+            {
+                _livroRepository . Cadastro ( l );
+                return  StatusCode ( 201 );
+            }
+            pegar ( Exceção  e )
+            {
+                lançar  nova  exceção ( e . Message );
+            }
+        }
+
+        [ HttpDelete ( " {id} " )]
+        public  IActionResult  Deletar ( int  id )
+        {
+            experimentar
+            {
+                _livroRepository . Excluir ( id );
+                return  Ok ( " Livro Removido com sucesso " );
+            }
+
+            pegar ( Exceção  e )
+            {
+                lançar  nova  exceção ( e . Message );
+            }
+        }
+
+
+        [ HttpPut ( " {id} " )]
+        public  IActionResult  Aterar ( int  id , Livro  l )
+        {
+            experimentar
+            {
+                _livroRepository . Mudar ( id , l );
+                return  StatusCode ( 204 );
+            }
+
+            pegar ( Exceção  e )
+            {
+                lançar  nova  exceção ( e . Message );
+            }
+            // fim-12-12-22
+
+        }
+
+    }
+}
