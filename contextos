@@ -1,0 +1,29 @@
+usando  CapítuloTurmaOi . Modelos ;
+usando  Microsoft . EntityFrameworkCore ;
+
+namespace  ChapterTurmaOi . Contextos
+{
+     classe  pública Sqlcontext : DbContext
+    {
+        public  Sqlcontext () { }
+        public  Sqlcontext ( DbContextOptions < Sqlcontext > opções ) : base ( opções ) { }
+        // vamos usar esse método para configurar o banco de dados
+         anulação protegida nula
+        OnConfiguring ( DbContextOptionsBuilder  optionsBuilder )
+        {
+            if ( ! optionsBuilder . IsConfigured )
+            {
+                // cada provedor tem sua sintaxe para especificação
+                // optionsBuilder.UseSqlServer("Data Source = DESKTOP-3PMVSMI\\SQLEXPRESS; initial catalog = Chapter; user id = sa; password = 123");
+                
+                // optionsBuilder.UseSqlServer("Data Source = DESKTOP-3PMVSMI\\SQLEXPRESS; initial catalog = Chapter; Integrated Security = true; TrustServerCertificate=True");
+                opçõesBuilder . UseSqlServer ( " Fonte de Dados = DESKTOP-3PMVSMI \\ SQLEXPRESS; catálogo inicial = Capítulo; Segurança Integrada = true " );
+            }
+        }
+        // dbset representa as entidades que serão utilizadas nas operações de leitura, criação, atualização e exclusão
+        public  DbSet < Livro > Livros { get ; definir ; }
+
+        public  DbSet < Usuário > Usuários { get ; definir ; }
+
+    }
+}
