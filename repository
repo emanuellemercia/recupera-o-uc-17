@@ -1,0 +1,57 @@
+usando  CapítuloTurmaOi . Contextos ;
+usando  CapítuloTurmaOi . Modelos ;
+
+namespace  ChapterTurmaOi . Repositórios
+{
+     classe  pública LivroRepository
+    {
+        private  readonly  Sqlcontext  _context ;
+        public  LivroRepository ( contexto Sqlcontext  )
+        {
+            _contexto  =  contexto ;
+
+        }
+
+        public  List < Livro > Listar ()
+        {
+
+            retorna  _contexto . Livros . ToList ();
+        }
+
+        public  Livro  BuscarPorId ( int  id )
+        {
+            retorna  _contexto . Livros . Encontrar ( id );
+        }
+
+        Public  void  Cadastro ( Livro  l )
+        {
+            _contexto . Livros . Adicionar ( l );
+            _contexto . Salvar Alterações ();
+        }
+
+
+        public  void  Deletar ( int  id )
+        {
+            Livro  l  =  _contexto . Livros . Encontrar ( id );
+            _contexto . Livros . Remover ( l );
+            _contexto . Salvar Alterações ();
+        }
+
+        public  void  Alterar ( int  id , Livro  l )
+        {
+            Livro  livroBuscado  =  _context . Livros . Encontrar ( id );
+
+            if ( livroBuscado  !=  null )
+            {
+                livroBuscado . Título  =  l . Título ;
+                livroBuscado . Quantas páginas  =  l . Quanta Paginas ;
+                livroBuscado . Disponível  =  l . Disponível ;
+
+                _contexto . Livros . Atualização ( livroBuscado );
+                _contexto . Salvar Alterações ();
+            }
+
+        }
+
+    }
+}
